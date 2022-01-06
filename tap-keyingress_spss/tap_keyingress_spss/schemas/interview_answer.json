@@ -1,0 +1,18 @@
+{
+  "type": "object",
+  "properties": {
+    "i_NUMBER": {
+      "type": "number"
+    },
+    "q_NUMBER": {
+      "type": "string"
+    },
+    "q_ANSWER": {
+      "type": "string"
+    },
+    "file_modified": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

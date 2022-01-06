@@ -1,0 +1,39 @@
+{
+  "type": "object",
+  "properties": {
+    "source_file": {
+      "type": "string"
+    },
+    "i_NUMBER": {
+      "type": "number"
+    },
+    "i_TAN": {
+      "type": "number"
+    },
+    "i_TID": {
+      "type": "number"
+    },
+    "i_START": {
+      "type": "number"
+    },
+    "i_END": {
+      "type": "number"
+    },
+    "i_TIME": {
+      "type": "number"
+    },
+    "i_STATUS": {
+      "type": "number"
+    },
+    "i_ST_TXT": {
+      "type": "string"
+    },
+    "current_Q": {
+      "type": "number"
+    },
+    "file_modified": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

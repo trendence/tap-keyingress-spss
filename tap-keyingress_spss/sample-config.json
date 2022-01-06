@@ -1,0 +1,7 @@
+{
+    "location_type" : "GCP",
+    "gcp_project" : "lanthan-dev",
+    "gcp_bucket" : "lanthan-lake",
+    "gcp_credentials" : "/Users/dirkheinecke/Documents/code/keys/lanthan-dev-7cd5cea84d02.json",
+    "file_location" : "test/surveys/0_raw"
+}

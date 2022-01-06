@@ -1,0 +1,33 @@
+version: 1
+send_anonymous_usage_stats: true
+project_id: 76854163-dfe6-42c3-bc46-21418596e3db
+plugins:
+  extractors:
+  - name: tap-keyingress_spss
+    namespace: tap_keyingress_spss
+    executable: ./tap-keyingress_spss.sh
+    config:
+      #location_type: LOCAL
+      #file_location: ./tap_keyingress_spss/tests/data
+      location_type: GCP
+      gcp_project: lanthan-dev
+      gcp_bucket: lanthan-lake
+      gcp_credentials: /Users/dirkheinecke/Documents/code/keys/lanthan-dev-7cd5cea84d02.json
+      file_location: test/surveys/0_raw
+  loaders:
+  - name: target-csv
+    variant: hotgluexyz
+    pip_url: git+https://github.com/hotgluexyz/target-csv.git@0.3.3
+    config:
+      destination_path: output
+  - name: target-jsonl
+    variant: andyh1203
+    pip_url: target-jsonl
+  - name: target-postgres
+    variant: meltano
+    pip_url: git+https://github.com/meltano/target-postgres.git
+    config:
+      user: postgres
+      host: localhost
+      port: 5432
+      dbname: meltano
