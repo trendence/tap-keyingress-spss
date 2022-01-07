@@ -1,0 +1,39 @@
+{
+  "type": "object",
+  "properties": {
+    "source_file": {
+      "type": "string"
+    },
+    "question_id": {
+      "type": "string"
+    },
+    "question_text": {
+      "type":["string","null"]
+    },
+    "measure": {
+      "type":"string"
+    },
+    "q_datatype":{
+      "type":"string"
+    },
+    "original_type":{
+      "type":"string"
+    },
+    "is_question_placeholder":{
+      "type":"boolean"
+    },
+    "parent_question_id": {
+      "type":["string","null"]
+    },
+    "core_question":{
+      "type":["string","null"]
+    },
+    "option":{
+      "type":["string","null"]
+    },
+    "file_modified": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

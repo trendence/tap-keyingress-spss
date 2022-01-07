@@ -8,12 +8,16 @@ from singer_sdk import typing as th  # JSON schema typing helper
 from tap_keyingress_spss.streams import (
     keyingress_spssStream,
     InterviewStream,
-    InterviewAnswerStream
+    InterviewAnswerStream,
+    QuestionStream,
+    QuestionOptionStream
 )
 
 STREAM_TYPES = [
     InterviewStream,
-    InterviewAnswerStream
+    InterviewAnswerStream,
+    QuestionStream,
+    QuestionOptionStream
 ]
 
 class Tapkeyingress_spss(Tap):
