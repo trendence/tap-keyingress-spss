@@ -11,6 +11,7 @@ import pyreadstat
 import logging
 
 from tap_keyingress_spss.gcp import CloudStorageClient
+from tap_keyingress_spss.spss import InterviewCollector, QuestionCollector
 
 
 class keyingress_spssStream(Stream):
@@ -64,27 +65,27 @@ class keyingress_spssStream(Stream):
     def read_spss_file_records(self, file:dict):
         try:
             df, meta = pyreadstat.read_sav(file.get('local_filename'))
+            ic = InterviewCollector(
+                modified=file.get('modified'),
+                source_file=file.get('name'))
+            qc = QuestionCollector(
+                df=df, 
+                meta=meta, 
+                modified=file.get('modified'),
+                source_file=file.get('name'))
         except pyreadstat._readstat_parser.ReadstatError:
             logging.error(f"pyreadstat could not read {file}")
             raise ValueError(f"pyreadstat could not read {file}")
 
-        #FIXME: remove me!!
-        df = df.sample(1)
+        logging.info(f"NO OF RECORDS TO BE PROCESSED: {df.shape[0]}")
 
         if self.name == 'interview':
-            df = df[['i_NUMBER', 'i_TAN', 'i_TID', 'i_START', 
-                    'i_END', 'i_TIME', 'i_STATUS', 'i_ST_TXT', 'current_Q']]
-            df["source_file"] = file.get('name')
+            return ic.collectInterviews(df=df)
         elif self.name == 'interview_answer':
-            df = df.drop(columns=['i_TAN', 'i_TID', 'i_START', 
-                                  'i_END', 'i_TIME', 'i_STATUS',
-                                  'i_ST_TXT', 'current_Q'])
-            df = df.set_index("i_NUMBER").stack().reset_index()
-            df = df.rename(columns={df.columns[1]:'q_NUMBER', df.columns[2]:'q_ANSWER'})
-            df['q_ANSWER'] = df['q_ANSWER'].astype(str)
-            df = df[df['q_ANSWER'].str.len() > 0]
-
-        logging.info(f"AND THE NO OF RECORDS {df.shape[0]}")
-
-        df["file_modified"] = file.get('modified')
-        return df.to_dict(orient="records")
+            return ic.collectInterviewAnswers(df=df, meta=meta)
+        elif self.name == 'question':
+            return qc.getQuestions()
+        elif self.name == 'question_option':
+            return qc.getOptions()
+        else:
+            not NotImplementedError(f"stream {self.name} unknown")

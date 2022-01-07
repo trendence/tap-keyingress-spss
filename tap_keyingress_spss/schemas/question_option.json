@@ -4,17 +4,14 @@
     "source_file": {
       "type": "string"
     },
-    "i_NUMBER": {
-      "type": "number"
-    },
     "question_id": {
       "type": "string"
     },
-    "q_answer_text": {
-      "type": ["string","null"]
+    "option_id": {
+      "type":"number"
     },
-    "q_answer_number": {
-      "type": ["number","null"]
+    "option_label": {
+      "type":"string"
     },
     "file_modified": {
       "type": "string",
